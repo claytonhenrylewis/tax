@@ -1,7 +1,7 @@
 public class Item {
-  private double price;
   private int count;
   private String name;
+  private double price;
   private boolean exempt;
   private boolean imported;
 
@@ -24,6 +24,30 @@ public class Item {
     this.name = "";
     for (int j = i; j < tokens.length - 2; j++) {
       this.name.concat(tokens[j]);
-    }
+    }  
+  }
+
+  public int getCount() {
+    return this.count;
+  }
+
+  public void setCount(int count) {
+    this.count = count;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public double getPrice() {
+    return this.price;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
   }
 }
