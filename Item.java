@@ -23,7 +23,7 @@ public class Item {
     this.price = Double.parseDouble(tokens[tokens.length - 1]);
     this.name = "";
     for (int j = i; j < tokens.length - 2; j++) {
-      this.name.concat(tokens[j]);
+      this.name = this.name.concat(tokens[j]);
     }  
   }
 
