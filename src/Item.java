@@ -1,6 +1,8 @@
 import java.lang.Math;
 import java.util.ArrayList;
 
+//Item class represents one purchased item
+
 public class Item {
   private int count;
   private String name;
@@ -12,22 +14,27 @@ public class Item {
   private static double salesTaxRate;
   private static double importTaxRate;
 
+  //Set sales tax rate for all items
   public static void setSalesTaxRate(double newSalesTaxRate) {
     Item.salesTaxRate = newSalesTaxRate;
   }
 
+  //Set import tax rate for all items
   public static void setImportTaxRate(double newImportTaxRate) {
     Item.importTaxRate = newImportTaxRate;
   }
-
+  
+  //Set up word net for all items
   public static void setWordNet(WordNet newWordNet) {
     Item.wordNet = newWordNet;
   }
 
+  //Set exemptions for all items
   public static void setExemptions(Exemptions newExemptions) {
     Item.exemptions = newExemptions;
   }
 
+  //Create new item from its component data
   public Item(int count, String name, double price, boolean imported) {
     this.count = count;
     this.name = name;
@@ -36,6 +43,7 @@ public class Item {
     this.imported = imported;
   }
 
+  //Create a new item from a line of text input
   public Item(String lineItem) {
     String[] tokens = lineItem.split(" ");
     int i = 0;
@@ -53,30 +61,22 @@ public class Item {
     this.exempt = this.checkExempt();
   }
 
+  //Access count
   public int getCount() {
     return this.count;
   }
 
-  public void setCount(int count) {
-    this.count = count;
-  }
-
+  //Access name
   public String getName() {
     return this.name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
+  //Access price
   public double getPrice() {
     return this.price;
   }
 
-  public void setPrice(double price) {
-    this.price = price;
-  }
-
+  //Compute tax for item
   public double getSalesTax() {
     double rate = 0.0;
     double tax = 0.0;
@@ -90,10 +90,13 @@ public class Item {
     return tax;
   }
 
+  //Compute total price for item
   public double getTotalPrice() {
     return (Math.ceil(((this.count * this.price) + this.getSalesTax()) * 100.0) / 100.0);
   }
 
+  //Check if item is exempt
+  //Uses WordNet to check if one of the exempt items is an ancestor of this item
   private boolean checkExempt() {
     ArrayList<String> exempt = Item.exemptions.getExemptions();
     String[] tokens = this.name.split(" ");
