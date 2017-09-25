@@ -43,11 +43,10 @@ public class Item {
     i++;
     if (tokens[i].toLowerCase().equals("imported")) {
       this.imported = true;
-      i++;
     }
     this.price = Double.parseDouble(tokens[tokens.length - 1]);
-    this.name = "";
-    for (int j = i; j < tokens.length - 2; j++) {
+    this.name = tokens[i];
+    for (int j = i + 1; j < tokens.length - 2; j++) {
       this.name = this.name.concat(" ");
       this.name = this.name.concat(tokens[j]);
     }
@@ -79,8 +78,8 @@ public class Item {
   }
 
   public double getSalesTax() {
-    double rate = 0;
-    double tax = 0;
+    double rate = 0.0;
+    double tax = 0.0;
     if (exempt)
       rate = 0;
     else
@@ -88,6 +87,7 @@ public class Item {
     if (imported)
       rate += importTaxRate;
     tax = Math.round(rate * price * 20.0) / 20.0;
+    System.out.println(rate);
     return tax;
   }
 
@@ -100,8 +100,16 @@ public class Item {
     String[] tokens = this.name.split(" ");
     for (String t : tokens) {
       for (String e : exempt) {
-        if (wordNet.isAncestor(e, t))
+        if (wordNet.isAncestor(e, t)) {
           return true;
+      }
+        if (t.length() > 1) {
+          if (t.charAt(t.length() - 1) == 's') {
+            String newT = t.substring(0, t.length() - 1);
+            if (wordNet.isAncestor(e, newT))
+              return true;
+          }
+        }
       }
     }
     return false;
