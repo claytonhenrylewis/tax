@@ -15,6 +15,10 @@ public class Exemptions {
     }
   }
 
+  public ArrayList<String> getExemptions() {
+    return this.exemptions;
+  }
+
   public void printExemptions() {
     for (String s : exemptions) {
       System.out.println(s);

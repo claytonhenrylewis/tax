@@ -1,3 +1,6 @@
+import java.lang.Math;
+import java.util.ArrayList;
+
 public class Item {
   private int count;
   private String name;
@@ -6,6 +9,16 @@ public class Item {
   private boolean imported;
   private static WordNet wordNet;
   private static Exemptions exemptions;
+  private static double salesTaxRate;
+  private static double importTaxRate;
+
+  public static void setSalesTaxRate(double newSalesTaxRate) {
+    Item.salesTaxRate = newSalesTaxRate;
+  }
+
+  public static void setImportTaxRate(double newImportTaxRate) {
+    Item.importTaxRate = newImportTaxRate;
+  }
 
   public static void setWordNet(WordNet newWordNet) {
     Item.wordNet = newWordNet;
@@ -15,10 +28,12 @@ public class Item {
     Item.exemptions = newExemptions;
   }
 
-  public Item(int count, String name, double price) {
+  public Item(int count, String name, double price, boolean imported) {
     this.count = count;
     this.name = name;
     this.price = price;
+    this.exempt = this.checkExempt();
+    this.imported = imported;
   }
 
   public Item(String lineItem) {
@@ -33,8 +48,10 @@ public class Item {
     this.price = Double.parseDouble(tokens[tokens.length - 1]);
     this.name = "";
     for (int j = i; j < tokens.length - 2; j++) {
+      this.name = this.name.concat(" ");
       this.name = this.name.concat(tokens[j]);
-    }  
+    }
+    this.exempt = this.checkExempt();
   }
 
   public int getCount() {
@@ -62,10 +79,31 @@ public class Item {
   }
 
   public double getSalesTax() {
-    return 0;
+    double rate = 0;
+    double tax = 0;
+    if (exempt)
+      rate = 0;
+    else
+      rate = salesTaxRate;
+    if (imported)
+      rate += importTaxRate;
+    tax = Math.round(rate * price * 20.0) / 20.0;
+    return tax;
   }
 
   public double getTotalPrice() {
-    return 0;
+    return (this.price + this.getSalesTax());
+  }
+
+  private boolean checkExempt() {
+    ArrayList<String> exempt = Item.exemptions.getExemptions();
+    String[] tokens = this.name.split(" ");
+    for (String t : tokens) {
+      for (String e : exempt) {
+        if (wordNet.isAncestor(e, t))
+          return true;
+      }
+    }
+    return false;
   }
 }

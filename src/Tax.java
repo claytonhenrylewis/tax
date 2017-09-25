@@ -4,16 +4,19 @@ import java.util.Iterator;
 
 public class Tax {
   public static void main(String [] args) {
-    Item item1 = new Item("1 book at 12.49");
-    System.out.println(item1.getCount());
-    System.out.println(item1.getName());
-    System.out.println(item1.getPrice());
-
     WordNet wordNet = new WordNet("../synsets.txt", "../hypernyms.txt");
     Item.setWordNet(wordNet);
-    System.out.println(wordNet.isAncestor("medicine", "pill"));
-    
+
     Exemptions exemptions = new Exemptions("../exemptions.txt");
     exemptions.printExemptions();
+    Item.setExemptions(exemptions);
+
+    ItemList list1 = new ItemList("../input1.txt");
+    ItemList list2 = new ItemList("../input2.txt");
+    ItemList list3 = new ItemList("../input3.txt");
+
+    System.out.println(list1.printList());
+    System.out.println(list2.printList());
+    System.out.println(list3.printList());
   }
 }
