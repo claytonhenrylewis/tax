@@ -44,7 +44,7 @@ public class Item {
     if (tokens[i].toLowerCase().equals("imported")) {
       this.imported = true;
     }
-    this.price = Double.parseDouble(tokens[tokens.length - 1]);
+    this.price = Math.ceil(Double.parseDouble(tokens[tokens.length - 1]) * 100.0) / 100.0;
     this.name = tokens[i];
     for (int j = i + 1; j < tokens.length - 2; j++) {
       this.name = this.name.concat(" ");
@@ -81,18 +81,17 @@ public class Item {
     double rate = 0.0;
     double tax = 0.0;
     if (exempt)
-      rate = 0;
+      rate = 0.0;
     else
       rate = salesTaxRate;
     if (imported)
       rate += importTaxRate;
-    tax = Math.round(rate * price * 20.0) / 20.0;
-    System.out.println(rate);
+    tax = Math.ceil(this.count * rate * price * 20.0) / 20.0;
     return tax;
   }
 
   public double getTotalPrice() {
-    return (this.price + this.getSalesTax());
+    return (Math.ceil(((this.count * this.price) + this.getSalesTax()) * 100.0) / 100.0);
   }
 
   private boolean checkExempt() {

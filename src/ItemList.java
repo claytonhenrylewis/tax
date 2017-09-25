@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class ItemList {
   private ArrayList<Item> items;
@@ -26,7 +27,7 @@ public class ItemList {
     for (Item item : this.items) {
       total += item.getSalesTax();
     }
-    return total;
+    return (Math.round(total * 100.0) / 100.0);
   }
 
   private double totalCost() {
@@ -34,26 +35,17 @@ public class ItemList {
     for (Item item : this.items) {
       total += item.getTotalPrice();
     }
-    return total;
+    return (Math.round(total * 100.0) / 100.0);
   }
 
   public String printList() {
     String list = "";
     for (Item i : this.items) {
-      String line = "";
-      line = line.concat(Integer.toString(i.getCount()));
-      line = line.concat(" ");
-      line = line.concat(i.getName());
-      line = line.concat(": ");
-      line = line.concat(Double.toString(i.getTotalPrice()));
-      line = line.concat("\n");
+      String line = String.format("%d %s: %.2f\n", i.getCount(), i.getName(), i.getTotalPrice());
       list = list.concat(line);
     }
-    list = list.concat("Sales Taxes: ");
-    list = list.concat(Double.toString(this.totalSalesTax()));
-    list = list.concat("\nTotal: ");
-    list = list.concat(Double.toString(this.totalCost()));
-    list = list.concat("\n");
+    list = list.concat(String.format("Sales Tax: %.2f\n", this.totalSalesTax()));
+    list = list.concat(String.format("Total: %.2f\n", this.totalCost()));
     return list;
   }
 }

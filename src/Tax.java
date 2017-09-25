@@ -4,6 +4,9 @@ import java.util.Iterator;
 
 public class Tax {
   public static void main(String [] args) {
+    Item.setSalesTaxRate(.10);
+    Item.setImportTaxRate(.05);
+
     WordNet wordNet = new WordNet("../synsets.txt", "../hypernyms.txt");
     Item.setWordNet(wordNet);
 
