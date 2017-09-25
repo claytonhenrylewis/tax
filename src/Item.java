@@ -4,6 +4,16 @@ public class Item {
   private double price;
   private boolean exempt;
   private boolean imported;
+  private static WordNet wordNet;
+  private static Exemptions exemptions;
+
+  public static void setWordNet(WordNet newWordNet) {
+    Item.wordNet = newWordNet;
+  }
+
+  public static void setExemptions(Exemptions newExemptions) {
+    Item.exemptions = newExemptions;
+  }
 
   public Item(int count, String name, double price) {
     this.count = count;
@@ -49,5 +59,13 @@ public class Item {
 
   public void setPrice(double price) {
     this.price = price;
+  }
+
+  public double getSalesTax() {
+    return 0;
+  }
+
+  public double getTotalPrice() {
+    return 0;
   }
 }

@@ -10,6 +10,10 @@ public class Tax {
     System.out.println(item1.getPrice());
 
     WordNet wordNet = new WordNet("../synsets.txt", "../hypernyms.txt");
-    //System.out.println(wordNet.isAncestor("food", "chocolate"));
+    Item.setWordNet(wordNet);
+    System.out.println(wordNet.isAncestor("medicine", "pill"));
+    
+    Exemptions exemptions = new Exemptions("../exemptions.txt");
+    exemptions.printExemptions();
   }
 }

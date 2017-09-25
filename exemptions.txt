@@ -1,0 +1,5 @@
+book
+food
+medical_care
+medical_instrument
+medicine
