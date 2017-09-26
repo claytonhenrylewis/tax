@@ -1,5 +1,8 @@
 # Tax
 
+A project by Clayton Lewis.
+claytonhenrylewis@gmail.com
+
 ## Overview
 
 This application computes sales tax and total cost for lists of items.
@@ -72,11 +75,12 @@ Sample input file:
 
 ### Exemptions
 
-The user may also configure the items that are exempt from sales tax. Included is a file named *exemptions.txt*. The user may add any items to that list. Each item should occupy a new line, as follows:
+The user may also configure the items that are exempt from sales tax. Included is a file named *exemptions.txt*. The user may add any items to that list. For best performance, it is recommended that items be elements of the WordNet. An ambitious user might check sysnsets.txt to verify that the item is part of the WordNet. Each item should occupy a new line, as follows:
 
 ```
 <item>
 <item>
+...
 ```
 
 ## Output Information
@@ -100,3 +104,21 @@ Sample output:
 Sales Tax: 6.70
 Total: 74.68
 ```
+
+## Solution Description and Methodology
+
+This solution is comprised mainly of the following classes:
+
+1. Tax: This class contains the main and makes the necessary calls to run the program given the user input.
+2. Item: This class represents one item on a shopping list. Contains functions to compute sales tax and total cost.
+3. ItemList: This class represents a list of Items. Contains function to print the receipt with tax and cost information for all items.
+4. Exemptions: This class represents a list of all items that are exempt from sales tax. Item has a static Exemptions object which is used to check each Item.
+
+The solution also includes the following classes. These classes use the [WordNet](https://wordnet.princeton.edu/) database, a useful resource for natural language processing. They also use some resources from [Princeton's "Algorithms"](http://algs4.cs.princeton.edu/code/). Most of this code is borrowed from a previous project (of mine) with WordNet.
+
+1. WordNet: This class takes the files *synsets.txt* and *hypernyms.txt* and builds a list of all nouns in the database and a graph showing relationships between those nouns. WordNet is used in this solution to check if items are exempt from sales tax. The method *isAncestor* checks if one noun is an ancestor another noun. It is used in the program to check if a given item has an ancestor that is in the list of exemptions. If so, the item is exempt.
+  [Note: a consequence of this solution is that "medicine" is an ancestor of "music" and thus an item such as "music CD" is exempt from sales tax. While music can be medicinal, the user may not intend for this interpretation. With enough time, options could be added to the application to address cases such as this. For now, the ambitious user might edit the *hypernyms.txt* to remove an unwanted relationship]
+2. SAP: This class finds the shortest ancestral path between two nodes of a digraph. It is used in WordNet.
+3. BreadthFirstDirectedPaths: This class builds a graph of all nodes connected to the given one. It is used in WordNet to check for ancestry.
+
+Project development history can be found at [this GitHub repository](https://github.com/claytonhenrylewis/tax).
