@@ -43,9 +43,9 @@ To run the program with sample input (sales tax rate = 0.10, import tax rate = 0
 
 ### Arguments
 
-1. sales-tax-rate: The sales tax rate as a decimal number (i.e. 0.10 )
-2. import-tax-rate: The import tax rate as a decimal number (i.e. 0.05 )
-3. input-file: The name of the files to read. Files are assumed to be in the directory *input*. Only pass the file name. Any number of files are accepted. Executing the run-all script will read from all files in the directory *input*.
+1. **sales-tax-rate**: The sales tax rate as a decimal number (i.e. 0.10 )
+2. **import-tax-rate**: The import tax rate as a decimal number (i.e. 0.05 )
+3. **input-file**: The name of the files to read. Files are assumed to be in the directory *input*. Only pass the file name. Any number of files are accepted. Executing the run-all script will read from all files in the directory *input*.
 
 ### Example execution
 
@@ -81,6 +81,16 @@ The user may also configure the items that are exempt from sales tax. Included i
 <item>
 <item>
 ...
+```
+
+Sample exemptions:
+
+```
+book
+food
+medical_care
+medical_instrument
+medicine
 ```
 
 ## Output Information
