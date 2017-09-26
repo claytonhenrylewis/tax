@@ -1,3 +1,5 @@
 #!/bin/bash
 
-src/run.sh $*
+cd src
+./run.sh $*
+cd ..
